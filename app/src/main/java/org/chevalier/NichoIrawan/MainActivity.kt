@@ -4,10 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -19,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import org.chevalier.NichoIrawan.ui.theme.Cheva2Theme
 
 class MainActivity : ComponentActivity() {
@@ -66,18 +74,41 @@ fun GreetingPreview() {
 @Composable
 fun contohColumn(modifier: Modifier) {
     Column (
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(Dp(20f)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ){
-        Text(
-            text = "Halo ${stringResource(R.string.app_name)}",
-            style = MaterialTheme.typography.bodyLarge
-        )
+        for (i in 1..5) {
+            Row {
+                Box(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .size(width = Dp.Infinity, height = Dp(100f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Halo ${stringResource(R.string.app_name)}",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
 
-        Text(
-            text = "Halo ${stringResource(R.string.app_name)}",
-            style = MaterialTheme.typography.bodyLarge
-        )
+                Box(Modifier.size(Dp(50f)))
+
+                Box(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .size(width = Dp.Infinity, height = Dp(100f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Halo ${stringResource(R.string.app_name)}",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            }
+            Box(Modifier.size(Dp(20f)))
+        }
     }
 }
