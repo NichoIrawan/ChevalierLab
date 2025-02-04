@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Cheva3</string>
+    <string name="app_name" translatable="false">Cheva3</string>
+    <string name="Register" translatable="false">Register</string>
+    <string name="Username" translatable="false">Username</string>
+    <string name="Email" translatable="false">Email</string>
+    <string name="Password" translatable="false">Password</string>
+    <string name="Register_sub_heading">Daftar menggunakan username, email, dan password anda</string>
+    <string name="Register_textfield_placeholder">Buat</string>
 </resources>
