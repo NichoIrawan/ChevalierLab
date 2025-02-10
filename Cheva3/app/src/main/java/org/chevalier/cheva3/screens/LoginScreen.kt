@@ -20,7 +20,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.chevalier.cheva3.R
@@ -32,6 +31,7 @@ fun LoginScreen (modifier: Modifier = Modifier) {
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var passwordState by remember { mutableStateOf(false) }
 
     Column (
         modifier = Modifier
@@ -59,7 +59,8 @@ fun LoginScreen (modifier: Modifier = Modifier) {
                     imageVector = Icons.Default.Person,
                     contentDescription = "Username"
                 )
-            }
+            },
+            show = true,
         )
 
         CustomTextFieldBox(
@@ -74,7 +75,8 @@ fun LoginScreen (modifier: Modifier = Modifier) {
                     imageVector = Icons.Default.Email,
                     contentDescription = "Email"
                 )
-            }
+            },
+            show = true,
         )
 
         CustomTextFieldBox(
@@ -89,7 +91,8 @@ fun LoginScreen (modifier: Modifier = Modifier) {
                     imageVector = Icons.Default.Lock,
                     contentDescription = "Password"
                 )
-            }
+            },
+            show = passwordState
         )
 
         Button(

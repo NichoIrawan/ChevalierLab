@@ -1,6 +1,5 @@
 package org.chevalier.cheva3.components
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
 fun CustomTextFieldBox (
@@ -19,6 +20,7 @@ fun CustomTextFieldBox (
     value: String,
     onValueChanged: (String) -> Unit,
     leadingIcon: @Composable (() -> Unit),
+    show: Boolean
 ) {
     Column (
         modifier = modifier,
@@ -37,7 +39,10 @@ fun CustomTextFieldBox (
             leadingIcon = leadingIcon,
             placeholder = {
                 Text(text = hint)
-            }
+            },
+            visualTransformation =
+            if (show) VisualTransformation.Companion.None
+            else PasswordVisualTransformation(),
         )
     }
 }
