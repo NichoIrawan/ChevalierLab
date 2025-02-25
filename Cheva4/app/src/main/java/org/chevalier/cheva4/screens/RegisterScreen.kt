@@ -31,19 +31,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.chevalier.cheva4.R
 import org.chevalier.cheva4.component.CustomTextField
+import org.chevalier.cheva4.dataclass.RegisterState
+import org.chevalier.cheva4.event.RegisterEvent
 import org.chevalier.cheva4.viewmodel.RegisterViewModel
 
 @Composable
 fun RegisterScreen (
     modifier: Modifier = Modifier,
-    viewModel: RegisterViewModel
+    state: RegisterState,
+    onEvent: (RegisterEvent) -> Unit,
 ) {
-    val username by viewModel.username.collectAsState()
-    val email by viewModel.email.collectAsState()
-    val password by viewModel.password.collectAsState()
-    val passwordState by viewModel.passwordState.collectAsState()
-
-    val context = LocalContext.current
 
     Column (
         modifier = Modifier
@@ -70,9 +67,9 @@ fun RegisterScreen (
         CustomTextField(
             label = stringResource(R.string.Username),
             hint = stringResource(R.string.Username),
-            value = username,
-            onValueChanged = { text ->
-                viewModel.updateUsername(text)
+            value = state.username,
+            onValueChanged = { newText ->
+                onEvent(RegisterEvent.onUsernameChanged(newText))
             },
             leadingIcon = {
                 Icon(
@@ -86,9 +83,9 @@ fun RegisterScreen (
         CustomTextField(
             label = stringResource(R.string.Email),
             hint = stringResource(R.string.Email),
-            value = email,
-            onValueChanged = { text ->
-                viewModel.updateEmail(text)
+            value = state.email,
+            onValueChanged = { newText ->
+                onEvent(RegisterEvent.onEmailChanged(newText))
             },
             leadingIcon = {
                 Icon(
@@ -103,9 +100,9 @@ fun RegisterScreen (
         CustomTextField(
             label = stringResource(R.string.Password),
             hint = stringResource(R.string.Password),
-            value = password,
-            onValueChanged = { text ->
-                viewModel.updatePassword(text)
+            value = state.password,
+            onValueChanged = { newText ->
+                onEvent(RegisterEvent.onPasswordChanged(newText))
             },
             leadingIcon = {
                 Icon(
@@ -113,15 +110,30 @@ fun RegisterScreen (
                     contentDescription = "Password"
                 )
             },
-            show = passwordState,
+            show = state.passwordState,
             trailingIcon = {
-                IconButton (
-                    onClick = {viewModel.updatePasswordState()}
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.baseline_remove_red_eye_24),
-                        contentDescription = "Password State",
-                    )
+                if (state.passwordState) {
+                    IconButton (
+                        onClick = {
+                            onEvent(RegisterEvent.onPasswordStateChanged(!state.passwordState))
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.baseline_visibility_24),
+                            contentDescription = "Password State",
+                        )
+                    }
+                } else {
+                    IconButton (
+                        onClick = {
+                            onEvent(RegisterEvent.onPasswordStateChanged(!state.passwordState))
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.baseline_visibility_off_24),
+                            contentDescription = "Password State",
+                        )
+                    }
                 }
             }
         )
@@ -130,9 +142,7 @@ fun RegisterScreen (
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(colorResource(R.color.purple_500)),
             onClick = {
-                val text: String = viewModel.checkError()
-
-                Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+                onEvent(RegisterEvent.onRegister)
             }
         ) {
             Text(
